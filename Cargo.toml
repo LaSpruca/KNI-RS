@@ -1,0 +1,14 @@
+[package]
+name = "kni-rs"
+version = "0.1.0"
+authors = ["Nathan Hare <me@laspruca.nz>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+hyper = { version = "0.14.2", features = ["full"] }
+tokio = { version = "1.0.2", features = ["full"] }
+hyper-tls = "0.5.0"
+futures = "0.3.12"
+chrono = "0.4.19"
