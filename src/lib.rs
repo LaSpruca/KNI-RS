@@ -23,13 +23,14 @@ struct Portal {
     auth_key: String
 }
 
-impl Protal {
+impl Portal {
     pub fn new(url: &str) -> Self {
         Portal {
             url: url.into(),
             auth_key: "vtku".into()
         }
     }
+    
     pub fn with_key(url: &str, key: &str) -> Self {
         Portal {
             url: url.into(),
@@ -37,11 +38,12 @@ impl Protal {
         }
     }
 
-    pub async fn get_notices_today(&self) {
-        retu
+    pub async fn get_notices_today(&self) -> Result<String, Box<dyn std::error::Error>> {
+        let now = chrono::Utc::now();
+        self.get_notices(&now).await?
     }
 
-    pub async fn get_notices(&self, date: &chrono::Date<Utc>) -> Result<String, Box<dyn std::error::Error>> {
+    pub async fn get_notices(&self, date: &chrono::DateTime<Utc>) -> Result<String, Box<dyn std::error::Error>> {
         let https = HttpsConnector::new();
         let client = Client::builder().build::<_, hyper::Body>(https);
 
@@ -64,6 +66,6 @@ impl Protal {
             data.append(&mut b);
         }
 
-        Ok(Result)
+        Ok(String::from_utf8(data)?)
     }
 }
