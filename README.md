@@ -1,12 +1,15 @@
-# KNI-RS
-## A rust interface for getting notices from KAMAR
-![build status](https://travis-ci.com/LaSpruca/KNI-RS.svg?branch=master&status=unknown)
-_____________________
-__This is still WIP__
-_____________________
+<h1 style="text-align: center">KNI-RS</h1>
+<h6 style="text-align: center">A rust interface for getting notices from KAMAR </h6>
+<div style="width: fit-content; margin: auto; display: flex; flex-direction: row;">
+    <a title="Latest push build on default branch" style="padding: 10px;">
+        <img src="https://www.travis-ci.com/LaSpruca/KNI-RS.svg?branch=master&amp;status=passed" alt="build:passed">
+    </a>
+</div>
+
 This is an iterface for accessing the KAMAR API in rust to retrieve the notices
 
 Example Usage:
+
 ```rust
 use kni_rs::Portal;
 
@@ -14,9 +17,9 @@ use kni_rs::Portal;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let portal = Portal::new("https://demo.school.kiwi");
     let notices = protal.get_notices_today().await?;
-    
+
     println!("Notices: {:?}", notices);
-    
+
     Ok(())
 }
 ```
