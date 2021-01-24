@@ -1,3 +1,17 @@
+//! A crate for using the Kamar api to fetch notices
+//!
+//! # Sample usage
+//! ```rust
+//! use kni_rs::Portal;
+//!
+//! #[tokio::main]
+//! async fn main() {
+//!     let portal = Portal::new("https://demo.school.kiwi/api/api.php");
+//!     let notices = portal.get_notices_today().await.unwrap();
+//!     println!("{:?}", notices)
+//! }
+//! ```
+
 extern crate serde;
 extern crate serde_xml_rs;
 extern crate chrono;
@@ -106,16 +120,3 @@ pub fn parse_date(date: &str) -> DateTime<Utc> {
 
     date_time.with_timezone(&Utc)
 }
-
-/// A crate for using the Kamar api to fetch notices
-/// Sample usage
-/// ```rust
-/// use kni_rs::Portal;
-///
-/// #[tokio::main]
-/// async fn main() {
-///     let portal = Portal::new("https://demo.school.kiwi/api/api.php");
-///     let notices = portal.get_notices_today().await.unwrap();
-///     println!("{:?}", notices)
-/// }
-/// ```
