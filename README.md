@@ -1,5 +1,6 @@
 # KNI-RS
 ## A rust interface for getting notices from KAMAR
+![build status](https://travis-ci.com/LaSpruca/KNI-RS.svg?branch=master&status=unknown)
 _____________________
 __This is still WIP__
 _____________________

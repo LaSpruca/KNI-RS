@@ -1,19 +1,8 @@
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use futures::FutureExt;
-
-    #[tokio::test]
-    async fn it_works() {
-        let protal = Portal::new("https://demo.school.kiwi/api/api.php");
-    }
-}
-
+mod tests;
 
 use hyper::{body::HttpBody as _, Client, Request, Body};
 use hyper_tls::HttpsConnector;
-use tokio::io::{self, AsyncWriteExt as _};
-use hyper::header::{USER_AGENT, CONTENT_TYPE};
 use chrono::prelude::*;
 
 
@@ -40,20 +29,20 @@ impl Portal {
 
     pub async fn get_notices_today(&self) -> Result<String, Box<dyn std::error::Error>> {
         let now = chrono::Utc::now();
-        self.get_notices(&now).await?
+        self.get_notices(&now).await
     }
 
     pub async fn get_notices(&self, date: &chrono::DateTime<Utc>) -> Result<String, Box<dyn std::error::Error>> {
         let https = HttpsConnector::new();
         let client = Client::builder().build::<_, hyper::Body>(https);
 
-        let formatted = date.format("dd/MM/yyyy").to_string();
+        let formatted = date.format("%d/%m/%Y").to_string();
 
         let request = Request::builder()
             .method("POST")
             .header("Content-Type", "application/x-www-form-urlencoded")
             .header("User-Agent", "KAMAR/ CFNetwork/ Darwin/")
-            .uri(self.url)
+            .uri(self.url.clone())
             .body(Body::from(format!("Command=GetNotices&Key=vtku&Date={}", formatted)))
             .unwrap();
 
@@ -68,4 +57,16 @@ impl Portal {
 
         Ok(String::from_utf8(data)?)
     }
+}
+
+/// Turns date string into `DateTime<Utc>`
+/// # Params
+/// - `date`: The date you want to pass, expected format: %Y-%m-%d
+pub fn parse_date(date: &str) -> DateTime<Utc> {
+    let adjusted_date = format!("{}T12:00:00", date);
+    let naive = NaiveDateTime::parse_from_str(adjusted_date.as_str(), "%Y-%m-%dT%H:%M:%S").unwrap();
+    let date_time: DateTime<Local> = Local.from_local_datetime(&naive).unwrap();
+    println!("{:?}", date_time);
+
+    date_time.with_timezone(&Utc)
 }
