@@ -11,13 +11,6 @@
 //!     println!("{:?}", notices)
 //! }
 //! ```
-
-extern crate serde;
-extern crate serde_xml_rs;
-extern crate chrono;
-extern crate hyper;
-extern crate hyper_tls;
-
 #[cfg(test)]
 mod tests;
 /// Structures used to represent the data from the Kamar API
