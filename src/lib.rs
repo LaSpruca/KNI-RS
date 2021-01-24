@@ -37,6 +37,10 @@ impl Protal {
         }
     }
 
+    pub async fn get_notices_today(&self) {
+        retu
+    }
+
     pub async fn get_notices(&self, date: &chrono::Date<Utc>) -> Result<String, Box<dyn std::error::Error>> {
         let https = HttpsConnector::new();
         let client = Client::builder().build::<_, hyper::Body>(https);

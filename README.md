@@ -11,7 +11,7 @@ use kni_rs::Portal;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let portal = Protal::new("https://demo.school.kiwi");
+    let portal = Portal::new("https://demo.school.kiwi");
     let notices = protal.get_notices_today().await?;
     
     println!("Notices: {:?}", notices);
