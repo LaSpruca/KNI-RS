@@ -5,7 +5,7 @@ mod tests {
 
     #[tokio::test]
     async fn it_works() {
-
+        let protal = Portal::new("https://demo.school.kiwi/api/api.php");
     }
 }
 
@@ -16,6 +16,8 @@ use tokio::io::{self, AsyncWriteExt as _};
 use hyper::header::{USER_AGENT, CONTENT_TYPE};
 use chrono::prelude::*;
 
+
+/// Struct used to access the Kamar API.
 struct Portal {
     url: String,
     auth_key: String
@@ -35,16 +37,18 @@ impl Protal {
         }
     }
 
-    pub async fn send_request(&self, date: &std::time::SystemTime) -> Result<String, Box<dyn std::error::Error>> {
+    pub async fn get_notices(&self, date: &chrono::Date<Utc>) -> Result<String, Box<dyn std::error::Error>> {
         let https = HttpsConnector::new();
         let client = Client::builder().build::<_, hyper::Body>(https);
+
+        let formatted = date.format("dd/MM/yyyy").to_string();
 
         let request = Request::builder()
             .method("POST")
             .header("Content-Type", "application/x-www-form-urlencoded")
             .header("User-Agent", "KAMAR/ CFNetwork/ Darwin/")
             .uri(self.url)
-            .body(Body::from("Command=GetNotices&Key=vtku&Date=11/03/2020"))
+            .body(Body::from(format!("Command=GetNotices&Key=vtku&Date={}", formatted)))
             .unwrap();
 
         let mut res = client.request(request).await?;
