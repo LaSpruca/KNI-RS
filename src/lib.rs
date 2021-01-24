@@ -1,5 +1,6 @@
 #[cfg(test)]
 mod tests;
+mod response;
 
 use hyper::{body::HttpBody as _, Client, Request, Body};
 use hyper_tls::HttpsConnector;
@@ -66,7 +67,6 @@ pub fn parse_date(date: &str) -> DateTime<Utc> {
     let adjusted_date = format!("{}T12:00:00", date);
     let naive = NaiveDateTime::parse_from_str(adjusted_date.as_str(), "%Y-%m-%dT%H:%M:%S").unwrap();
     let date_time: DateTime<Local> = Local.from_local_datetime(&naive).unwrap();
-    println!("{:?}", date_time);
 
     date_time.with_timezone(&Utc)
 }
