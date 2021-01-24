@@ -1,6 +1,9 @@
+#[macro_use] extern crate serde;
+
 #[cfg(test)]
 mod tests;
-mod response;
+/// Structures used to represent the data from the Kamar API
+pub mod response;
 
 use hyper::{body::HttpBody as _, Client, Request, Body};
 use hyper_tls::HttpsConnector;
@@ -8,19 +11,26 @@ use chrono::prelude::*;
 
 
 /// Struct used to access the Kamar API.
-struct Portal {
+pub struct Portal {
     url: String,
     auth_key: String
 }
 
 impl Portal {
+    /// Creates a new `Portal` struct with the given url and the key vtku
+    /// # Params
+    /// - `url`: The full url of the portal api, i.e. `https://demo.school.kiwi/api/api.php`
     pub fn new(url: &str) -> Self {
         Portal {
             url: url.into(),
             auth_key: "vtku".into()
         }
     }
-    
+
+    /// Creates a new `Portal` struct with the given url and key
+    /// # Params
+    /// - `url`: The full url of the portal api, i.e. `https://demo.school.kiwi/api/api.php`
+    /// - `key`: The authentication key from the API, if the default does not work
     pub fn with_key(url: &str, key: &str) -> Self {
         Portal {
             url: url.into(),
@@ -28,11 +38,15 @@ impl Portal {
         }
     }
 
+    /// Gets the notices for today from the specified portal
     pub async fn get_notices_today(&self) -> Result<String, Box<dyn std::error::Error>> {
         let now = chrono::Utc::now();
         self.get_notices(&now).await
     }
 
+    /// Gets the notices for the specified date from the specified portal
+    /// # Params
+    /// - `date`: The date that you would like to get the notices for
     pub async fn get_notices(&self, date: &chrono::DateTime<Utc>) -> Result<String, Box<dyn std::error::Error>> {
         let https = HttpsConnector::new();
         let client = Client::builder().build::<_, hyper::Body>(https);
