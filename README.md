@@ -26,3 +26,5 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
+[Part of the KNI project](https://github.com/jacobtread/kni)
