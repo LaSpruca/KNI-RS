@@ -1,10 +1,10 @@
-use serde::Deserialize;
+use serde::{Serialize, Deserialize};
 use std::error::Error;
 use std::fmt;
 
 /// If the API returned an error
 #[serde(rename = "NoticesResults")]
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NoticesError {
     #[serde(rename = "apiversion")]
     pub api_version: Option<String>,
@@ -31,7 +31,7 @@ impl fmt::Display for NoticesError {
 impl Error for NoticesError {}
 
 /// The response from the Kamar API
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct NoticesResults {
     /// The API version
     #[serde(rename = "apiversion")]
@@ -60,7 +60,7 @@ pub struct NoticesResults {
 }
 
 /// The struct for the meeting notices
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct MeetingNotices {
     /// Number of meeting notices
     #[serde(rename = "NumberMeetingRecords")]
@@ -72,7 +72,7 @@ pub struct MeetingNotices {
 }
 
 /// One meeting notice
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Meeting {
     /// The index of the notice
     pub index: i32,
@@ -100,7 +100,7 @@ pub struct Meeting {
 }
 
 /// The struct for the meeting notices
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct GeneralNotices {
     /// The number of general notices
     #[serde(rename = "NumberGeneralRecords")]
@@ -112,7 +112,7 @@ pub struct GeneralNotices {
 }
 
 /// One general notice
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct General {
     /// The index of the notice
     pub index: i32,
@@ -129,4 +129,3 @@ pub struct General {
     #[serde(rename = "Teacher")]
     pub teacher: String,
 }
-
