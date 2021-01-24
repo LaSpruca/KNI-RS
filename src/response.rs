@@ -1,4 +1,34 @@
 use serde::Deserialize;
+use std::error::Error;
+use std::fmt;
+
+/// If the API returned an error
+#[serde(rename = "NoticesResults")]
+#[derive(Debug, Clone, Deserialize)]
+pub struct NoticesError {
+    #[serde(rename = "apiversion")]
+    pub api_version: Option<String>,
+    /// The portal version
+    #[serde(rename = "portalversion")]
+    pub portal_version: Option<String>,
+    /// The access level of the auth key
+    #[serde(rename = "AccessLevel")]
+    pub access_level: i32,
+    /// The error code
+    #[serde(rename = "ErrorCode")]
+    pub error_code: i32,
+    /// The error
+    #[serde(rename = "Error")]
+    pub error: String
+}
+
+impl fmt::Display for NoticesError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Error: {} (error code: {})", self.error, self.error_code)
+    }
+}
+
+impl Error for NoticesError {}
 
 /// The response from the Kamar API
 #[derive(Debug, Clone, Deserialize)]
@@ -14,7 +44,7 @@ pub struct NoticesResults {
     pub access_level: i32,
     /// Error code, 0 if no error
     #[serde(rename = "ErrorCode")]
-    pub error_code: String,
+    pub error_code: i32,
     /// The date of the notices retrieved
     #[serde(rename = "NoticeDate")]
     pub notice_date: String,
@@ -38,7 +68,7 @@ pub struct MeetingNotices {
 
     /// The actual meeting notices
     #[serde(rename = "Meeting")]
-    pub meeting: Vec<Meeting>,
+    pub meeting: Option<Vec<Meeting>>,
 }
 
 /// One meeting notice
@@ -78,7 +108,7 @@ pub struct GeneralNotices {
 
     /// The actual meeting notices
     #[serde(rename = "General")]
-    pub meeting: Vec<General>,
+    pub meeting: Option<Vec<General>>,
 }
 
 /// One general notice
