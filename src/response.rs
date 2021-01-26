@@ -68,7 +68,7 @@ pub struct MeetingNotices {
 
     /// The actual meeting notices
     #[serde(rename = "Meeting")]
-    pub meeting: Option<Vec<Meeting>>,
+    pub notices: Option<Vec<Meeting>>,
 }
 
 /// One meeting notice
@@ -104,11 +104,11 @@ pub struct Meeting {
 pub struct GeneralNotices {
     /// The number of general notices
     #[serde(rename = "NumberGeneralRecords")]
-    pub number_meeting_records: String,
+    pub number_general_records: String,
 
     /// The actual meeting notices
     #[serde(rename = "General")]
-    pub meeting: Option<Vec<General>>,
+    pub notices: Option<Vec<General>>,
 }
 
 /// One general notice
