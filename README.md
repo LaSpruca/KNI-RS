@@ -2,7 +2,7 @@
 <h6 style="text-align: center">A rust interface for getting notices from KAMAR </h6>
 <div style="width: fit-content; margin: auto; display: flex; flex-direction: row;">
     <a style="padding: 10px;">
-        <img src="https://www.travis-ci.com/LaSpruca/KNI-RS.svg?branch=master&amp;status=passed" alt="build:passed">
+        <img src="https://travis-ci.com/LaSpruca/KNI-RS.svg?branch=master" alt="Build status">
     </a>
     <a href="https://docs.rs/kni-rs" style="padding: 10px;">
         <img src="https://docs.rs/kni-rs/badge.svg" alt="Crates.io">
